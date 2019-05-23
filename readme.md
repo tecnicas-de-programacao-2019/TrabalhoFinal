@@ -1,3 +1,12 @@
+# INSTALAÇAO NECESARIAS A FAZER CASO NECESSARIO
+## Passos a serem realizados:
+1- cd /usr/lib/jvm
+2- ls
+3- remover todos javas instalados (EX: sudo rm -r "nome_do_arquivo")
+4- sudo apt install openjdk-12-jre-headless (P/ testar java -version)
+5 -sudo sudo apt install openjdk-12-jdk-headless (P/ testar javac -version)
+6-
+
 # ESPECIFICACAO DE SOFTWARE
 ## Modulo de acesso a conta corrente do Banco Nossa Grana
 
