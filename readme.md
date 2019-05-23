@@ -1,11 +1,14 @@
 # INSTALAÇAO NECESARIAS A FAZER CASO NECESSARIO
 ## Passos a serem realizados:
-*1- cd /usr/lib/jvm
-*2- ls
-*3- remover todos javas instalados (EX: sudo rm -r "nome_do_arquivo")
-*4- sudo apt install openjdk-12-jre-headless (P/ testar java -version)
-*5 -sudo sudo apt install openjdk-12-jdk-headless (P/ testar javac -version)
-*6- git clone
+* cd /usr/lib/jvm
+* ls
+* remover todos javas instalados (EX: sudo rm -r "nome_do_arquivo")
+* sudo apt install openjdk-12-jre-headless (P/ testar java -version)
+* -sudo sudo apt install openjdk-12-jdk-headless (P/ testar javac -version)
+*  git clone https://github.com/tecnicas-de-programacao-2019/TrabalhoFinal.git
+* mvn clean
+* mvn javafx:compile
+* mvn package
 
 # ESPECIFICACAO DE SOFTWARE
 ## Modulo de acesso a conta corrente do Banco Nossa Grana
