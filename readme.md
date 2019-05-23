@@ -4,7 +4,7 @@
 * ls
 * remover todos javas instalados (EX: sudo rm -r "nome_do_arquivo")
 * sudo apt install openjdk-12-jre-headless (P/ testar java -version)
-* -sudo sudo apt install openjdk-12-jdk-headless (P/ testar javac -version)
+* sudo sudo apt install openjdk-12-jdk-headless (P/ testar javac -version)
 *  git clone https://github.com/tecnicas-de-programacao-2019/TrabalhoFinal.git
 * mvn clean
 * mvn javafx:compile
