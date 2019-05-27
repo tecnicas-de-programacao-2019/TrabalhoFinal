@@ -55,8 +55,8 @@ public class Conta {
 	
 	public double getLimRetiradaDiaria() {
 		switch(status) {
-		case 0:  return 5000.0;
-		case 1:  return 50000.0;
+		case 0:  return 10000.0;
+		case 1:  return 100000.0;
 		case 2:  return 500000.0;
 		default: return 0.0;
 		}
