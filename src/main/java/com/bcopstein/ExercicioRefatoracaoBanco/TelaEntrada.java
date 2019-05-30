@@ -23,14 +23,14 @@ import javafx.stage.Stage;
 public class TelaEntrada {
 	private Stage mainStage; 
 	private Scene cenaEntrada; 
-	private Map<Integer, Conta> contas; 
-	private List<Operacao> operacoes; 
+	private Contas contas; 
+	private Operacoes operacoes; 
 
 	private TextField tfContaCorrente;
 
-	public TelaEntrada(Stage anStage, Map<Integer, Conta> lstContas, List<Operacao> operacoes) {
+	public TelaEntrada(Stage anStage, Contas contas, Operacoes operacoes) {
 		mainStage = anStage;
-		contas = lstContas;
+		this.contas = contas;
 		this.operacoes = operacoes;
 	}
 

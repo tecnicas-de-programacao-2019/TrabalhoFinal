@@ -17,6 +17,19 @@ public class Persistencia {
     private final String NomeBDContas = "BDContasBNG.txt";
     private final String NomeBDOperacoes = "BDOperBNG.txt";
 
+    private static Persistencia persistencia = null;
+
+    private Persistencia(){
+        
+    }
+
+    public static Persistencia getInstance(){
+        if(persistencia == null){
+            persistencia = new Persistencia();
+        }
+        return persistencia;
+    }
+
     public Map<Integer,Conta> loadContas(){
     	Map<Integer,Conta> contas = new HashMap<>();
 

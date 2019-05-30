@@ -1,10 +1,6 @@
 package com.bcopstein.ExercicioRefatoracaoBanco;
 
 import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,7 +22,7 @@ public class TelaOperacoes {
 	private Stage mainStage;
 	private Scene cenaEntrada;
 	private Scene cenaOperacoes;
-	private List<Operacao> operacoes;
+	private Operacoes operacoes;
 	private ObservableList<Operacao> operacoesConta;
 
 	private Conta conta;
@@ -38,7 +34,7 @@ public class TelaOperacoes {
 	private String categoria;
 	private String limRetDiaria;
 
-	public TelaOperacoes(Stage mainStage, Scene telaEntrada, Conta conta, List<Operacao> operacoes) { // conta
+	public TelaOperacoes(Stage mainStage, Scene telaEntrada, Conta conta, Operacoes operacoes) { // conta
 		this.mainStage = mainStage;
 		this.cenaEntrada = telaEntrada;
 		this.conta = conta;
@@ -70,8 +66,7 @@ public class TelaOperacoes {
 		grid.add(tit, 0, 3);
 
 		// Seleciona apenas o extrato da conta atual
-		operacoesConta = FXCollections.observableArrayList(operacoes.stream()
-				.filter(op -> op.getNumeroConta() == this.conta.getNumero()).collect(Collectors.toList()));
+		operacoesConta = operacoes.getOperacoesConta(this.conta.getNumero());
 
 		ListView<Operacao> extrato = new ListView<>(operacoesConta);
 		extrato.setPrefHeight(140);
@@ -136,20 +131,9 @@ public class TelaOperacoes {
 			try {
 				GregorianCalendar date = new GregorianCalendar();
 				double valor = Integer.parseInt(tfValorOperacao.getText());
-				
-				//Calcula o limite diario
-				double totalDiario = 0;
-				for(Operacao op : operacoes){
-					if(op.getTipoOperacao() == op.DEBITO && op.getNumeroConta() == conta.getNumero()){
-						if(op.getDia() == date.get(GregorianCalendar.DAY_OF_MONTH) && 
-						op.getMes() == date.get(GregorianCalendar.MONTH + 1) && 
-						op.getAno() == date.get(GregorianCalendar.YEAR)){
-							totalDiario += op.getValorOperacao();
-						}
-					}
-				}
 
-				double total = totalDiario + valor;
+				double total = operacoes.gastoDiario(this.conta.getNumero(),
+											 valor, date);
 				if (valor < 0.0 || valor > conta.getSaldo()) {
 					throw new NumberFormatException("Saldo insuficiente");
 				} else if(total > conta.getLimRetiradaDiaria()){

@@ -7,17 +7,15 @@ import javafx.stage.Stage;
 
 
 public class App extends Application {
-	private Persistencia persistencia;
-	private Map<Integer,Conta> contas;
-	private List<Operacao> operacoes;
+	private Contas contas;
+	private Operacoes operacoes;
 	
 	private TelaEntrada telaEntrada;
 	
     @Override
     public void start(Stage primaryStage) {
-    	persistencia = new Persistencia();
-        contas = persistencia.loadContas();    	
-    	operacoes = persistencia.loadOperacoes();
+        contas = new Contas(Persistencia.getInstance());
+    	operacoes = new Operacoes(Persistencia.getInstance());
     	
     	primaryStage.setTitle("$$ Banco NOSSA GRANA $$");
 
@@ -29,8 +27,8 @@ public class App extends Application {
     
     @Override
     public void stop() {
-        persistencia.saveContas(contas.values());
-        persistencia.saveOperacoes(operacoes);
+        contas.saveContas();
+        operacoes.saveOperacoes();
     }
     
     public static void main(String[] args) {
