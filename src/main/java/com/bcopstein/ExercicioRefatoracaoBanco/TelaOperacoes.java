@@ -91,12 +91,15 @@ public class TelaOperacoes {
 		Button btnCredito = new Button("Credito");
 		Button btnDebito = new Button("Debito");
 		Button btnVoltar = new Button("Voltar");
+		Button btnEstatisticas = new Button("Estatísticas");
 		HBox hbBtn = new HBox(20);
 		hbBtn.setAlignment(Pos.TOP_CENTER);
 		hbBtn.getChildren().add(btnCredito);
 		hbBtn.getChildren().add(btnDebito);
 		hbBtn.getChildren().add(btnVoltar);
+		//hbBtn.getChildren().add(btnEstatisticas);
 		grid.add(hbBtn, 1, 2);
+		grid.add(btnEstatisticas, 1, 4);
 
 		btnCredito.setOnAction(e -> {
 			try {
@@ -165,6 +168,12 @@ public class TelaOperacoes {
 
 		btnVoltar.setOnAction(e -> {
 			mainStage.setScene(cenaEntrada);
+		});
+
+		btnEstatisticas.setOnAction(e -> {
+			TelaEstatisticas telaEstatisticas = new TelaEstatisticas(mainStage, cenaOperacoes,conta,operacoes);
+			Scene scene = telaEstatisticas.getTelaEstatisticas();
+			mainStage.setScene(scene);
 		});
 
 		cenaOperacoes = new Scene(grid);
