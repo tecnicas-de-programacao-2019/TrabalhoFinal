@@ -1,15 +1,3 @@
-# INSTALAÇAO NECESARIAS A FAZER CASO NECESSARIO
-## Passos a serem realizados:
-* cd /usr/lib/jvm
-* ls
-* remover todos javas instalados (EX: sudo rm -r "nome_do_arquivo")
-* sudo apt install openjdk-12-jre-headless (P/ testar java -version)
-* sudo sudo apt install openjdk-12-jdk-headless (P/ testar javac -version)
-*  git clone https://github.com/tecnicas-de-programacao-2019/TrabalhoFinal.git
-* mvn clean
-* mvn javafx:compile
-* mvn package
-
 # ESPECIFICACAO DE SOFTWARE
 ## Modulo de acesso a conta corrente do Banco Nossa Grana
 
@@ -64,34 +52,28 @@ Para simplificar a troca de dados os seguintes arquivos são fornecidos:
 ## PARTE II: refatoração
 
 ### Adoção do padrão Singleton
-Inicialmente aplica-se o padrão singleton na classe "Persistencia".
-Depois criam-se as classes "Contas" e "Operacoes" que irão
-encapsular o dicionário de contas e a lista de operações.
+Aplicar o padrão singleton na classe "Persistencia".
 
-Isso irá permitir tanto aplicar o padrão singleton como
-operações de mais alto nível como manter a "conta em uso" como a
-lista de operações da "conta em uso".
-
-### Tornar as dependências explícitas
-verificar as classes onde o teste é simplificado pelo uso de dependências
-explícitas através do construtor e fazer as modificações necessárias
+### Criar as abstraçoes Contas e Operacoes
+- A abstração "Contas" irá encapsular o cadastro de contas corrente (Map<Integer,Conta>) juntamente com todas as funcionalidade relativas a uma conta corrente. Esta abstração dependende das classes Persistência e Operacoes. Deixe estas dependências explícitas recebendo referências estas classes no construtor.
+- A abstrações "Operacoes" irá encapsular o cadastro de operaçoes (List<Operacao>) juntamente com todas as funcionalidades relativas as operações. Esta abstracao depende da classe Persistencia. Deixe esta dependência explícita no construtor.
+- Crie drivers de teste tanto para Contas como para Operacoes. Forneça mocks no lugar das dependências para garantir a independência dos testes.
 
 ### Adoção da arquitetura em 3 camadas e do padrão fachada
-Será criada a classe LogicaOperacoes com as operações
-demandadas pela camada de interface com o usuário:
-* Definir conta em uso
-* Operaçao de crédito
-* Operacao de débito
-* Solicita extrato
-* Solicita saldo
-* Solicita saldo medio
-* Total créditos
-* Total débitos
-* VALIDACOES: criar uma classe (singleton) para validacoes dos limites diários de saques.
+- Criar uma classe responsável pelas validações eliminando todo o código de negócios da camada de interface com o usuário
+- Criar uma classe para fazer o papel de "fachada da camada de negócios". Esta classe deverá disponibilizar um método para cada umadas operações demandadas pela interface com o usuário:
+ - Definir conta em uso
+ - Operaçao de crédito
+ - Operacao de débito
+ - Solicita extrato
+ - Solicita saldo
+ - Solicita saldo medio
+ - Total créditos
+ - Total débitos
+- O construtor da fachada deverá se encarregar também de criar as instancias de Contas, Operacoes e Validacao informando as depenências conforme o caso.
+- A fachada deverá ser um singleton
 
-Isso irá permitir que a dependencia da camada de 
-apresentacao para a de lógica se restrinja a apenas
-uma classe.
+A criação da fachada ira permitir que a dependência da camada de apresentacao para a de lógica se restrinja a apenas uma classe.
 
 ### Adoção do padrão StatePattern
 Cria a interface StateConta
@@ -104,4 +86,5 @@ Explora classes aninhadas.
 
 ### Adoção do padrão Observer - funcionalidade adicional
 Criar um dialogo modeless que mantém visível o nome do correntista e o saldo médio com o maior saldo médio da agência. Adotar observer para ser notificado pela persistencia toda vez que esta informação variar.
+
 

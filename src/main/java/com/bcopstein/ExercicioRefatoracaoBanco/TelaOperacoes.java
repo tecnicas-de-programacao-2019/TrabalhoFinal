@@ -22,10 +22,10 @@ public class TelaOperacoes {
 	private Stage mainStage;
 	private Scene cenaEntrada;
 	private Scene cenaOperacoes;
-	private Operacoes operacoes;
 	private ObservableList<Operacao> operacoesConta;
 
 	private Conta conta;
+	private Fachada fachada;
 
 	private TextField tfValorOperacao;
 	private TextField tfSaldo;
@@ -34,11 +34,11 @@ public class TelaOperacoes {
 	private String categoria;
 	private String limRetDiaria;
 
-	public TelaOperacoes(Stage mainStage, Scene telaEntrada, Conta conta, Operacoes operacoes) { // conta
+	public TelaOperacoes(Stage mainStage, Scene telaEntrada, Fachada fachada, int nroConta) { // conta
 		this.mainStage = mainStage;
 		this.cenaEntrada = telaEntrada;
-		this.conta = conta;
-		this.operacoes = operacoes;
+		this.fachada = fachada;
+		this.conta = fachada.getContaAtual();
 	}
 
 	public Scene getTelaOperacoes() {
@@ -66,7 +66,7 @@ public class TelaOperacoes {
 		grid.add(tit, 0, 3);
 
 		// Seleciona apenas o extrato da conta atual
-		operacoesConta = operacoes.getOperacoesConta(this.conta.getNumero());
+		operacoesConta = fachada.getOperacoesConta();
 
 		ListView<Operacao> extrato = new ListView<>(operacoesConta);
 		extrato.setPrefHeight(140);
@@ -109,11 +109,12 @@ public class TelaOperacoes {
 				}
 				conta.deposito(valor);
 				GregorianCalendar date = new GregorianCalendar();
-				Operacao op = new Operacao(date.get(GregorianCalendar.DAY_OF_MONTH),
-						date.get(GregorianCalendar.MONTH + 1), date.get(GregorianCalendar.YEAR),
-						date.get(GregorianCalendar.HOUR), date.get(GregorianCalendar.MINUTE),
-						date.get(GregorianCalendar.SECOND), conta.getNumero(), conta.getStatus(), valor, 0);
-				operacoes.add(op);
+
+				Operacao op = fachada.addOperacao(date.get(GregorianCalendar.DAY_OF_MONTH),
+				date.get(GregorianCalendar.MONTH + 1), date.get(GregorianCalendar.YEAR),
+				date.get(GregorianCalendar.HOUR), date.get(GregorianCalendar.MINUTE),
+				date.get(GregorianCalendar.SECOND), conta.getNumero(), conta.getStatus(), valor, 0);
+
 				tfSaldo.setText("" + conta.getSaldo());
 				operacoesConta.add(op);
 				categoria = "Categoria: " + conta.getStrStatus();
@@ -135,20 +136,18 @@ public class TelaOperacoes {
 				GregorianCalendar date = new GregorianCalendar();
 				double valor = Integer.parseInt(tfValorOperacao.getText());
 
-				double total = operacoes.gastoDiario(this.conta.getNumero(),
-											 valor, date);
-				if (valor < 0.0 || valor > conta.getSaldo()) {
+				if (!fachada.temSaldoParaDebito(valor)) {
 					throw new NumberFormatException("Saldo insuficiente");
-				} else if(total > conta.getLimRetiradaDiaria()){
+				} else if(fachada.estourouLimiteDebitoDiario(valor)){
 					throw new NumberFormatException("Limite diario de saque atingido.");
 				}
-				conta.retirada(valor);
+
+				fachada.retiraValor(valor);
 				
-				Operacao op = new Operacao(date.get(GregorianCalendar.DAY_OF_MONTH),
-						date.get(GregorianCalendar.MONTH + 1), date.get(GregorianCalendar.YEAR),
-						date.get(GregorianCalendar.HOUR), date.get(GregorianCalendar.MINUTE),
-						date.get(GregorianCalendar.SECOND), conta.getNumero(), conta.getStatus(), valor, 1);
-				operacoes.add(op);
+				Operacao op = fachada.addOperacao(date.get(GregorianCalendar.DAY_OF_MONTH),
+				date.get(GregorianCalendar.MONTH + 1), date.get(GregorianCalendar.YEAR),
+				date.get(GregorianCalendar.HOUR), date.get(GregorianCalendar.MINUTE),
+				date.get(GregorianCalendar.SECOND), conta.getNumero(), conta.getStatus(), valor, 1);
 				tfSaldo.setText("" + conta.getSaldo());
 				operacoesConta.add(op);
 
@@ -171,9 +170,9 @@ public class TelaOperacoes {
 		});
 
 		btnEstatisticas.setOnAction(e -> {
-			TelaEstatisticas telaEstatisticas = new TelaEstatisticas(mainStage, cenaOperacoes,conta,operacoes);
-			Scene scene = telaEstatisticas.getTelaEstatisticas();
-			mainStage.setScene(scene);
+			//TelaEstatisticas telaEstatisticas = new TelaEstatisticas(mainStage, cenaOperacoes,conta,operacoes);
+			// Scene scene = telaEstatisticas.getTelaEstatisticas();
+			// mainStage.setScene(scene);
 		});
 
 		cenaOperacoes = new Scene(grid);

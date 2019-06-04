@@ -29,7 +29,7 @@ public class Operacoes {
         operacoes.add(op);
     }
 
-    public double gastoDiario(Integer nroConta, double valorAdicionado, GregorianCalendar date){
+    public double gastoDiario(Integer nroConta, GregorianCalendar date){
         double totalDiario = 0;
         for(Operacao op : operacoes){
             if(op.getTipoOperacao() == op.DEBITO && op.getNumeroConta() == nroConta){
@@ -41,6 +41,6 @@ public class Operacoes {
             }
         }
 
-        return totalDiario + valorAdicionado;
+        return totalDiario;
     }
 }

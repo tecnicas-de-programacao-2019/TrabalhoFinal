@@ -23,15 +23,13 @@ import javafx.stage.Stage;
 public class TelaEntrada {
 	private Stage mainStage; 
 	private Scene cenaEntrada; 
-	private Contas contas; 
-	private Operacoes operacoes; 
+	private Fachada fachada;
 
 	private TextField tfContaCorrente;
 
-	public TelaEntrada(Stage anStage, Contas contas, Operacoes operacoes) {
+	public TelaEntrada(Stage anStage, Fachada fachada) {
 		mainStage = anStage;
-		this.contas = contas;
-		this.operacoes = operacoes;
+		this.fachada = fachada;
 	}
 
 	public Scene getTelaEntrada() {
@@ -73,11 +71,11 @@ public class TelaEntrada {
 		btnIn.setOnAction(e -> {
 			try {
 				Integer nroConta = Integer.parseInt(tfContaCorrente.getText());
-				Conta conta = contas.get(nroConta);
-				if (conta == null) {
+				boolean login = fachada.login(nroConta);
+				if (login == false) {
 					throw new NumberFormatException("Conta invalida");
 				}
-				TelaOperacoes toper = new TelaOperacoes(mainStage, cenaEntrada,conta,operacoes);
+				TelaOperacoes toper = new TelaOperacoes(mainStage, cenaEntrada, this.fachada, nroConta);
 				Scene scene = toper.getTelaOperacoes();
 				mainStage.setScene(scene);
 			} catch (NumberFormatException ex) {

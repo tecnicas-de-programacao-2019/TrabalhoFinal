@@ -17,7 +17,7 @@ public class OperacoesTest{
     private Operacoes ops;
     
     @BeforeEach
-    void init() {
+    public void init() {
         ArrayList<Operacao> listOp = new ArrayList<Operacao>();
 
         listOp.add(new Operacao(1, 5, 2019, 15, 15, 56, 1, 0, 1000, 1));
@@ -34,6 +34,7 @@ public class OperacoesTest{
     @Test
     @DisplayName("Testa se uma lista de operacoes eh retornada sendo passado o numero da conta.")
     public void testaGetOperacoes() {
+        
         ops.getOperacoesConta(1);
     }
 
