@@ -53,8 +53,8 @@ public class TelaEstatisticas {
 		Text scenetitle = new Text(dadosCorr);
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
-        
-        
+
+
         Text saldoMedio = new Text("Saldo médio em: ");
         Text totalCredito = new Text("Total de crédito em: ");
         Text totalDebito = new Text("Total de débito em: ");
@@ -62,11 +62,16 @@ public class TelaEstatisticas {
         vbox.setSpacing(10);
         vbox.setPadding(new Insets(25));
         grid.add(vbox,1,0);
-        
-        
+				Button btnback = new Button("Voltar");
+				HBox hbBtn = new HBox(30);
+				hbBtn.setAlignment(Pos.BOTTOM_CENTER);
+				hbBtn.getChildren().add(btnback);
+				grid.add(hbBtn, 1, 4);
+
 
 		cenaEstatisticas = new Scene(grid);
 		return cenaEstatisticas;
 	}
+
 
 }
