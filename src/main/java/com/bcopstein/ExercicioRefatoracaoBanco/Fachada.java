@@ -1,5 +1,7 @@
 package com.bcopstein.ExercicioRefatoracaoBanco;
 
+import java.util.GregorianCalendar;
+
 import javafx.collections.ObservableList;
 
 public class Fachada {
@@ -35,9 +37,13 @@ public class Fachada {
         return this.contas.getOperacoesConta();
     }
 
-    public Operacao addOperacao(int dia, int mes, int ano, int hora, int minuto, int segundo, int numeroConta, int statusConta,
+    public Operacao addOperacao(int numeroConta, int statusConta,
     double valorOperacao, int tipoOperacao){
-        Operacao op = new Operacao(dia, mes, ano, hora, minuto, segundo, numeroConta, statusConta, valorOperacao, tipoOperacao);
+        GregorianCalendar date = new GregorianCalendar();
+        Operacao op = new Operacao(date.get(GregorianCalendar.DAY_OF_MONTH),
+        date.get(GregorianCalendar.MONTH + 1), date.get(GregorianCalendar.YEAR),
+        date.get(GregorianCalendar.HOUR), date.get(GregorianCalendar.MINUTE),
+        date.get(GregorianCalendar.SECOND), numeroConta, statusConta, valorOperacao, tipoOperacao);
         this.contas.addOperacao(op);
         return op;
     }
