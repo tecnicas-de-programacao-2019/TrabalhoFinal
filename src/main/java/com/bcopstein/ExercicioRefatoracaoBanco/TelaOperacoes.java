@@ -107,10 +107,7 @@ public class TelaOperacoes {
 				fachada.deposita(valor);
 				GregorianCalendar date = new GregorianCalendar();
 
-				Operacao op = fachada.addOperacao(date.get(GregorianCalendar.DAY_OF_MONTH),
-				date.get(GregorianCalendar.MONTH + 1), date.get(GregorianCalendar.YEAR),
-				date.get(GregorianCalendar.HOUR), date.get(GregorianCalendar.MINUTE),
-				date.get(GregorianCalendar.SECOND), fachada.getContaAtual().getNumero(), fachada.getContaAtual().getStatus(), valor, 0);
+				Operacao op = fachada.addOperacao(fachada.getContaAtual().getNumero(), fachada.getContaAtual().getStatus(), valor, 0);
 
 				tfSaldo.setText("" + fachada.getContaAtual().getSaldo());
 				operacoesConta.add(op);
@@ -141,10 +138,7 @@ public class TelaOperacoes {
 
 				fachada.retiraValor(valor);
 				
-				Operacao op = fachada.addOperacao(date.get(GregorianCalendar.DAY_OF_MONTH),
-				date.get(GregorianCalendar.MONTH + 1), date.get(GregorianCalendar.YEAR),
-				date.get(GregorianCalendar.HOUR), date.get(GregorianCalendar.MINUTE),
-				date.get(GregorianCalendar.SECOND), fachada.getContaAtual().getNumero(), fachada.getContaAtual().getStatus(), valor, 1);
+				Operacao op = fachada.addOperacao(fachada.getContaAtual().getNumero(), fachada.getContaAtual().getStatus(), valor, 1);
 				tfSaldo.setText("" + fachada.getContaAtual().getSaldo());
 				operacoesConta.add(op);
 
