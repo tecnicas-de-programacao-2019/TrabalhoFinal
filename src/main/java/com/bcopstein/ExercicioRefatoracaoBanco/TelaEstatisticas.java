@@ -70,16 +70,19 @@ public class TelaEstatisticas {
 		Label tdValue = new Label("Teste");
 		grid.add(tdValue, 2, 3);
 
+
+		ChoiceBox<String> choiceBox = new ChoiceBox<String>();
+		choiceBox.getItems().addAll("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
+		choiceBox.setValue("Junho");
+		 
+
 		
-		ChoiceBox<String> choiceBox = new ChoiceBox<>();
-
-
 		Button btnback = new Button("Voltar");
 		HBox hbBtn = new HBox(30);
 		
 		hbBtn.setAlignment(Pos.BOTTOM_LEFT);
 		
-		hbBtn.getChildren().add(btnback);
+		hbBtn.getChildren().addAll(btnback,choiceBox);
 		grid.add(hbBtn, 0, 4);	
 		btnback.setOnAction(e -> {
 			mainStage.setScene(cenaOperacoes);
