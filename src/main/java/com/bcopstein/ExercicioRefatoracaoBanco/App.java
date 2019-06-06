@@ -14,11 +14,10 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         Operacoes operacoes = new Operacoes(Persistencia.getInstance());
-        fachada = Fachada.getInstance();
     	
     	primaryStage.setTitle("$$ Banco NOSSA GRANA $$");
 
-    	telaEntrada = new TelaEntrada(primaryStage, fachada); 
+    	telaEntrada = new TelaEntrada(primaryStage); 
 
         primaryStage.setScene(telaEntrada.getTelaEntrada());
         primaryStage.show();
@@ -26,7 +25,7 @@ public class App extends Application {
     
     @Override
     public void stop() {
-        fachada.saveContas();
+        fachada.getInstance().saveContas();
     }
     
     public static void main(String[] args) {

@@ -62,4 +62,8 @@ public class Fachada {
         }
         return false;
     }
+
+    public void deposita(double valor){
+        this.getContaAtual().deposito(valor);
+    }
 }

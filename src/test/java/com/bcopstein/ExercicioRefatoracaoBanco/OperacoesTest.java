@@ -9,9 +9,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
+import javafx.collections.ObservableList;
 
 public class OperacoesTest{
     private Operacoes ops;
@@ -34,8 +37,38 @@ public class OperacoesTest{
     @Test
     @DisplayName("Testa se uma lista de operacoes eh retornada sendo passado o numero da conta.")
     public void testaGetOperacoes() {
-        
-        ops.getOperacoesConta(1);
+        ObservableList<Operacao> lista = ops.getOperacoesConta(1);
+        assertEquals(2, lista.size());
+        assertEquals(1000, lista.get(0).getValorOperacao());
+        assertEquals(654, lista.get(1).getValorOperacao());
+    }
+    
+    @Test
+    @DisplayName("Testa se o gasto diario de uma conta esta sendo calculado")
+    public void testaGastoDiario() {
+        GregorianCalendar date = new GregorianCalendar();
+        ops.add(new Operacao(date.get(GregorianCalendar.DAY_OF_MONTH),
+        date.get(GregorianCalendar.MONTH + 1),
+        date.get(GregorianCalendar.YEAR),
+         15, 15, 56, 1, 0, 1000, 1));
+        double valor = ops.gastoDiario(1, date);
+        assertEquals(1000, valor);
+    }
+
+    @Test
+    @DisplayName("Testa se o gasto diario de uma conta eh zero se nao ha operacoes diarias")
+    public void testaGastoDiarioSemOps() {
+        GregorianCalendar date = new GregorianCalendar();
+        double valor = ops.gastoDiario(2, date);
+        assertEquals(0, valor);
+    }
+
+    @Test
+    @DisplayName("Testa se o gasto diario de uma conta nao existente eh zero")
+    public void testaGastoDiarioSemConta() {
+        GregorianCalendar date = new GregorianCalendar();
+        double valor = ops.gastoDiario(8, date);
+        assertEquals(0, valor);
     }
 
 }

@@ -35,9 +35,10 @@ public class TelaEstatisticas {
 	private String categoria;
 	private String limRetDiaria;
 
-	public TelaEstatisticas(Stage mainStage, Scene telaEntrada, Fachada fachada) { // conta
+	public TelaEstatisticas(Stage mainStage, Scene telaEntrada) { // conta
 		this.mainStage = mainStage;
 		this.cenaEntrada = telaEntrada;
+		this.fachada = Fachada.getInstance();
 		this.conta = fachada.getContaAtual();
 	}
 

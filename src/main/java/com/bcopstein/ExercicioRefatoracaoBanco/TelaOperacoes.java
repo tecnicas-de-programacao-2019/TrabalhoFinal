@@ -23,8 +23,6 @@ public class TelaOperacoes {
 	private Scene cenaEntrada;
 	private Scene cenaOperacoes;
 	private ObservableList<Operacao> operacoesConta;
-
-	private Conta conta;
 	private Fachada fachada;
 
 	private TextField tfValorOperacao;
@@ -34,11 +32,10 @@ public class TelaOperacoes {
 	private String categoria;
 	private String limRetDiaria;
 
-	public TelaOperacoes(Stage mainStage, Scene telaEntrada, Fachada fachada, int nroConta) { // conta
+	public TelaOperacoes(Stage mainStage, Scene telaEntrada, int nroConta) { // conta
 		this.mainStage = mainStage;
 		this.cenaEntrada = telaEntrada;
-		this.fachada = fachada;
-		this.conta = fachada.getContaAtual();
+		this.fachada = Fachada.getInstance();
 	}
 
 	public Scene getTelaOperacoes() {
@@ -48,13 +45,13 @@ public class TelaOperacoes {
 		grid.setVgap(10);
 		grid.setPadding(new Insets(25, 25, 25, 25));
 
-		String dadosCorr = conta.getNumero() + " : " + conta.getCorrentista();
+		String dadosCorr = fachada.getContaAtual().getNumero() + " : " + fachada.getContaAtual().getCorrentista();
 		Text scenetitle = new Text(dadosCorr);
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		grid.add(scenetitle, 0, 0, 2, 1);
 
-		categoria = "Categoria: " + conta.getStrStatus();
-		limRetDiaria = "Limite retirada diaria: " + conta.getLimRetiradaDiaria();
+		categoria = "Categoria: " + fachada.getContaAtual().getStrStatus();
+		limRetDiaria = "Limite retirada diaria: " + fachada.getContaAtual().getLimRetiradaDiaria();
 
 		cat = new Label(categoria);
 		grid.add(cat, 0, 1);
@@ -74,7 +71,7 @@ public class TelaOperacoes {
 
 		tfSaldo = new TextField();
 		tfSaldo.setDisable(true);
-		tfSaldo.setText("" + conta.getSaldo());
+		tfSaldo.setText("" + fachada.getContaAtual().getSaldo());
 		HBox valSaldo = new HBox(20);
 		valSaldo.setAlignment(Pos.BOTTOM_LEFT);
 		valSaldo.getChildren().add(new Label("Saldo"));
@@ -107,18 +104,18 @@ public class TelaOperacoes {
 				if (valor < 0.0) {
 					throw new NumberFormatException("Valor invalido");
 				}
-				conta.deposito(valor);
+				fachada.deposita(valor);
 				GregorianCalendar date = new GregorianCalendar();
 
 				Operacao op = fachada.addOperacao(date.get(GregorianCalendar.DAY_OF_MONTH),
 				date.get(GregorianCalendar.MONTH + 1), date.get(GregorianCalendar.YEAR),
 				date.get(GregorianCalendar.HOUR), date.get(GregorianCalendar.MINUTE),
-				date.get(GregorianCalendar.SECOND), conta.getNumero(), conta.getStatus(), valor, 0);
+				date.get(GregorianCalendar.SECOND), fachada.getContaAtual().getNumero(), fachada.getContaAtual().getStatus(), valor, 0);
 
-				tfSaldo.setText("" + conta.getSaldo());
+				tfSaldo.setText("" + fachada.getContaAtual().getSaldo());
 				operacoesConta.add(op);
-				categoria = "Categoria: " + conta.getStrStatus();
-				limRetDiaria = "Limite retirada diaria: " + conta.getLimRetiradaDiaria();
+				categoria = "Categoria: " + fachada.getContaAtual().getStrStatus();
+				limRetDiaria = "Limite retirada diaria: " + fachada.getContaAtual().getLimRetiradaDiaria();
 				cat.setText(categoria);
 				lim.setText(limRetDiaria);
 			} catch (NumberFormatException ex) {
@@ -147,12 +144,12 @@ public class TelaOperacoes {
 				Operacao op = fachada.addOperacao(date.get(GregorianCalendar.DAY_OF_MONTH),
 				date.get(GregorianCalendar.MONTH + 1), date.get(GregorianCalendar.YEAR),
 				date.get(GregorianCalendar.HOUR), date.get(GregorianCalendar.MINUTE),
-				date.get(GregorianCalendar.SECOND), conta.getNumero(), conta.getStatus(), valor, 1);
-				tfSaldo.setText("" + conta.getSaldo());
+				date.get(GregorianCalendar.SECOND), fachada.getContaAtual().getNumero(), fachada.getContaAtual().getStatus(), valor, 1);
+				tfSaldo.setText("" + fachada.getContaAtual().getSaldo());
 				operacoesConta.add(op);
 
-				categoria = "Categoria: " + conta.getStrStatus();
-				limRetDiaria = "Limite retirada diaria: " + conta.getLimRetiradaDiaria();
+				categoria = "Categoria: " + fachada.getContaAtual().getStrStatus();
+				limRetDiaria = "Limite retirada diaria: " + fachada.getContaAtual().getLimRetiradaDiaria();
 				cat.setText(categoria);
 				lim.setText(limRetDiaria);
 			} catch (NumberFormatException ex) {
@@ -170,7 +167,7 @@ public class TelaOperacoes {
 		});
 
 		btnEstatisticas.setOnAction(e -> {
-			TelaEstatisticas telaEstatisticas = new TelaEstatisticas(mainStage, cenaOperacoes, fachada);
+			TelaEstatisticas telaEstatisticas = new TelaEstatisticas(mainStage, cenaOperacoes);
 			Scene scene = telaEstatisticas.getTelaEstatisticas();
 			mainStage.setScene(scene);
 		});

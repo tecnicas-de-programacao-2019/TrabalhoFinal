@@ -27,9 +27,9 @@ public class TelaEntrada {
 
 	private TextField tfContaCorrente;
 
-	public TelaEntrada(Stage anStage, Fachada fachada) {
+	public TelaEntrada(Stage anStage) {
 		mainStage = anStage;
-		this.fachada = fachada;
+		this.fachada = Fachada.getInstance();
 	}
 
 	public Scene getTelaEntrada() {
@@ -75,7 +75,7 @@ public class TelaEntrada {
 				if (login == false) {
 					throw new NumberFormatException("Conta invalida");
 				}
-				TelaOperacoes toper = new TelaOperacoes(mainStage, cenaEntrada, this.fachada, nroConta);
+				TelaOperacoes toper = new TelaOperacoes(mainStage, cenaEntrada, nroConta);
 				Scene scene = toper.getTelaOperacoes();
 				mainStage.setScene(scene);
 			} catch (NumberFormatException ex) {
