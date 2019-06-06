@@ -23,10 +23,10 @@ public class TelaEstatisticas {
 	private Stage mainStage;
 	private Scene cenaEntrada;
 	private Scene cenaEstatisticas;
-	private Operacoes operacoes;
 	private ObservableList<Operacao> operacoesConta;
 
 	private Conta conta;
+	private Fachada fachada;
 
 	private TextField tfValorOperacao;
 	private TextField tfSaldo;
@@ -35,11 +35,10 @@ public class TelaEstatisticas {
 	private String categoria;
 	private String limRetDiaria;
 
-	public TelaEstatisticas(Stage mainStage, Scene telaEntrada, Conta conta, Operacoes operacoes) { // conta
+	public TelaEstatisticas(Stage mainStage, Scene telaEntrada, Fachada fachada) { // conta
 		this.mainStage = mainStage;
 		this.cenaEntrada = telaEntrada;
-		this.conta = conta;
-		this.operacoes = operacoes;
+		this.conta = fachada.getContaAtual();
 	}
 
 	public Scene getTelaEstatisticas() {

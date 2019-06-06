@@ -170,9 +170,9 @@ public class TelaOperacoes {
 		});
 
 		btnEstatisticas.setOnAction(e -> {
-			//TelaEstatisticas telaEstatisticas = new TelaEstatisticas(mainStage, cenaOperacoes,conta,operacoes);
-			// Scene scene = telaEstatisticas.getTelaEstatisticas();
-			// mainStage.setScene(scene);
+			TelaEstatisticas telaEstatisticas = new TelaEstatisticas(mainStage, cenaOperacoes, fachada);
+			Scene scene = telaEstatisticas.getTelaEstatisticas();
+			mainStage.setScene(scene);
 		});
 
 		cenaOperacoes = new Scene(grid);
