@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -21,7 +22,7 @@ import javafx.stage.Stage;
 
 public class TelaEstatisticas {
 	private Stage mainStage;
-	private Scene cenaEntrada;
+	private Scene cenaOperacoes;
 	private Scene cenaEstatisticas;
 	private ObservableList<Operacao> operacoesConta;
 
@@ -35,9 +36,9 @@ public class TelaEstatisticas {
 	private String categoria;
 	private String limRetDiaria;
 
-	public TelaEstatisticas(Stage mainStage, Scene telaEntrada, Fachada fachada) { // conta
+	public TelaEstatisticas(Stage mainStage, Scene cenaOperacoes, Fachada fachada) { // conta
 		this.mainStage = mainStage;
-		this.cenaEntrada = telaEntrada;
+		this.cenaOperacoes = cenaOperacoes;
 		this.conta = fachada.getContaAtual();
 	}
 
@@ -54,20 +55,37 @@ public class TelaEstatisticas {
         grid.add(scenetitle, 0, 0, 2, 1);
 
 
-        Text saldoMedio = new Text("Saldo médio em: ");
-        Text totalCredito = new Text("Total de crédito em: ");
-        Text totalDebito = new Text("Total de débito em: ");
-        VBox vbox = new VBox(saldoMedio,totalCredito,totalDebito);
-        vbox.setSpacing(10);
-        vbox.setPadding(new Insets(25));
-        grid.add(vbox,1,0);
-				Button btnback = new Button("Voltar");
-				HBox hbBtn = new HBox(30);
-				hbBtn.setAlignment(Pos.BOTTOM_CENTER);
-				hbBtn.getChildren().add(btnback);
-				grid.add(hbBtn, 1, 4);
+															
+		Label sm = new Label( "Saldo médio em: ");
+		grid.add(sm, 0, 1);
+		Label smValue = new Label("Teste");
+		grid.add(smValue, 2, 1);
+
+		Label tc = new Label("Total de crédito em: " );
+		grid.add(tc, 0, 2);
+		Label tcValue = new Label("Teste");
+		grid.add(tcValue, 2, 2);
+
+		Label td = new Label("Total de débito em: ");
+		grid.add(td, 0, 3);
+		Label tdValue = new Label("Teste");
+		grid.add(tdValue, 2, 3);
+
+		
+		ChoiceBox<String> choiceBox = new ChoiceBox<>();
 
 
+		Button btnback = new Button("Voltar");
+		HBox hbBtn = new HBox(30);
+		
+		hbBtn.setAlignment(Pos.BOTTOM_LEFT);
+		
+		hbBtn.getChildren().add(btnback);
+		grid.add(hbBtn, 0, 4);	
+		btnback.setOnAction(e -> {
+			mainStage.setScene(cenaOperacoes);
+		});
+		
 		cenaEstatisticas = new Scene(grid);
 		return cenaEstatisticas;
 	}
