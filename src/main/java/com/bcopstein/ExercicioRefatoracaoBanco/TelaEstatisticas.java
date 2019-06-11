@@ -1,5 +1,7 @@
 package com.bcopstein.ExercicioRefatoracaoBanco;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.GregorianCalendar;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -55,33 +57,51 @@ public class TelaEstatisticas {
 
 
 															
-		Label sm = new Label( "Saldo médio em: ");
+		Label sm = new Label( "Saldo médio: ");
 		grid.add(sm, 0, 1);
 		Label smValue = new Label("Teste");
 		grid.add(smValue, 2, 1);
 
-		Label tc = new Label("Total de crédito em: " );
+		Label tc = new Label("Total de crédito: " );
 		grid.add(tc, 0, 2);
 		Label tcValue = new Label("Teste");
 		grid.add(tcValue, 2, 2);
 
-		Label td = new Label("Total de débito em: ");
+		Label td = new Label("Total de débito: ");
 		grid.add(td, 0, 3);
 		Label tdValue = new Label("Teste");
 		grid.add(tdValue, 2, 3);
 
-		
-		ChoiceBox<String> choiceBox = new ChoiceBox<>();
 
+	
+		ChoiceBox<String> choiceMes = new ChoiceBox<String>();
+		choiceMes.getItems().addAll("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
+		choiceMes.setValue("Junho");
 
-		Button btnback = new Button("Voltar");
+		ChoiceBox<String> choiceAno = new ChoiceBox<String>();
+		choiceAno.getItems().addAll("2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010", "2009", "2008");
+		choiceAno.setValue("2019");
+		 
+		Button btnGet = new Button("Selecionar");
+		btnGet.setOnAction(e -> {
+			System.out.println("Mês:"+choiceMes.getValue() + " Ano:" + choiceAno.getValue() );
+		});
+
+	// Pra fazer realmente com o mês atual. Só tem que mudar os mesês para ingles.
+	/*	LocalDate currentDate = LocalDate.now();
+		Month m = currentDate.getMonth();
+		System.out.println(m);
+	*/
+
 		HBox hbBtn = new HBox(30);
-		
 		hbBtn.setAlignment(Pos.BOTTOM_LEFT);
+		hbBtn.getChildren().addAll(choiceMes,choiceAno, btnGet);
+		grid.add(hbBtn, 0, 4);
 		
-		hbBtn.getChildren().add(btnback);
-		grid.add(hbBtn, 0, 4);	
-		btnback.setOnAction(e -> {
+		Button btnBack = new Button("Voltar");
+		grid.add(btnBack, 0, 5);
+		
+		btnBack.setOnAction(e -> {
 			mainStage.setScene(cenaOperacoes);
 		});
 		
