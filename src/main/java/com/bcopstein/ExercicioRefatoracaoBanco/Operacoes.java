@@ -36,7 +36,7 @@ public class Operacoes {
         int daysInMonth = mycal.getActualMaximum(mycal.DAY_OF_MONTH);
 
 
-        System.out.println(daysInMonth);
+        
 
         for (Operacao op : operacoes){
             if (op.getNumeroConta()==conta && op.getAno()==ano && op.getMes()==mes){

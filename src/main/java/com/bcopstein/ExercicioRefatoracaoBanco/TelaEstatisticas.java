@@ -79,9 +79,8 @@ public class TelaEstatisticas {
 		choiceMes.getItems().addAll("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
 		
 		Calendar now = Calendar.getInstance();
-		choiceMes.getSelectionModel().select(now.get(Calendar.MONTH)+1);
-		// choiceMes.getSelectionModel().getSelectedIndex()+1
-
+		choiceMes.getSelectionModel().select(now.get(Calendar.MONTH));
+		
 
 		ChoiceBox<String> choiceAno = new ChoiceBox<String>();
 		choiceAno.getItems().addAll("2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010", "2009", "2008");
