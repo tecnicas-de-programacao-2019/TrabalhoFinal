@@ -1,8 +1,5 @@
 package com.bcopstein.ExercicioRefatoracaoBanco;
 public class Conta {
-	public final int SILVER = 0;
-	public final int GOLD = 1;
-	public final int PLATINUM = 2;
 	public final int LIM_SILVER_GOLD = 50000;
 	public final int LIM_GOLD_PLATINUM = 200000;
 	public final int LIM_PLATINUM_GOLD = 100000;
@@ -11,20 +8,28 @@ public class Conta {
 	private int numero;
 	private String correntista;
 	private double saldo;
-	private int status;
+	private StateConta status;
 
 	public Conta(int umNumero, String umNome) {
 		numero = umNumero;
 		correntista = umNome;
 		saldo = 0.0;
-		status = SILVER;
+		status = new Silver();
 	}
 	
 	public Conta(int umNumero, String umNome,double umSaldo, int umStatus) {
 		numero = umNumero;
 		correntista = umNome;
 		saldo = umSaldo;
-		status = umStatus;
+
+		if(umStatus == 0)
+			status = new Silver();
+		else if(umStatus == 1)
+			status = new Gold();
+		else if(umStatus == 2)
+			status = new Platinum();
+		else
+			throw new IllegalArgumentException("Estado invalido");
 	}
 	
 	public double getSaldo() {
@@ -40,42 +45,19 @@ public class Conta {
 	}
 	
 	public int getStatus() {
-		return status;
+		return status.getStatus();
 	}
 	
 	public String getStrStatus() {
-		switch(status) {
-		case 0:  return "Silver";
-		case 1:  return "Gold";
-		case 2:  return "Platinum";
-		default: return "none";
-
-		}
+		return status.getStrStatus();
 	}
 	
 	public double getLimRetiradaDiaria() {
-		switch(status) {
-		case 0:  return 10000.0;
-		case 1:  return 100000.0;
-		case 2:  return 500000.0;
-		default: return 0.0;
-		}
+		return status.getLimRetiradaDiaria();
 	}
 	
 	public void deposito(double valor) {
-		if (status == SILVER) {
-			saldo += valor;
-			if (saldo >= LIM_SILVER_GOLD) {
-				status = GOLD;
-			}
-		} else if (status == GOLD) {
-			saldo += valor * 1.01;
-			if (saldo >= LIM_GOLD_PLATINUM) {
-				status = PLATINUM;
-			}
-		} else if (status == PLATINUM) {
-			saldo += valor * 1.025;
-		}
+		status.deposito(valor);
 	}
 
 	public void retirada(double valor) {
@@ -83,15 +65,7 @@ public class Conta {
 			return;
 		} else {
 			saldo = saldo - valor;
-			if (status == PLATINUM) {
-				if (saldo < LIM_PLATINUM_GOLD) {
-					status = GOLD;
-				}
-			} else if (status == GOLD) {
-				if (saldo < LIM_GOLD_SILVER) {
-					status = SILVER;
-				}
-			}
+			status.retirada();
 		}
 	}
 
@@ -99,5 +73,108 @@ public class Conta {
 	public String toString() {
 		return "Conta [numero=" + numero + ", correntista=" + correntista + ", saldo=" + saldo + ", status=" + status
 				+ "]";
+	} 
+
+	// Implementação dos estados
+	//---------------------------------------------------------
+
+	class Silver implements StateConta{
+
+		@Override
+		public String getStrStatus() {
+			return "Silver";
+		}
+
+		@Override
+		public double getLimRetiradaDiaria() {
+			return 10000.0;
+		}
+
+
+		@Override
+		public int getStatus() {
+			return 0;
+		}
+
+		@Override
+		public void deposito(double valor) {
+			saldo += valor;
+
+			if (saldo >= LIM_SILVER_GOLD) {
+				status = new Gold();
+			}
+		}
+
+		@Override
+		public void retirada() {
+
+		}
+		
+	}
+
+	class Gold implements StateConta{
+
+		@Override
+		public String getStrStatus() {
+			return "Gold";
+		}
+
+		@Override
+		public double getLimRetiradaDiaria() {
+			return 100000.0;
+		}
+
+		@Override
+		public int getStatus() {
+			return 1;
+		}
+
+		@Override
+		public void deposito(double valor) {
+			saldo += (valor * 1.01);
+
+			if (saldo >= LIM_GOLD_PLATINUM) {
+				status = new Platinum();
+			}
+		}
+
+		@Override
+		public void retirada() {
+			if (saldo < LIM_GOLD_SILVER) {
+				status = new Silver();
+			}
+		}
+		
+	}
+
+	class Platinum implements StateConta{
+
+		@Override
+		public String getStrStatus() {
+			return "Platinum";
+		}
+
+		@Override
+		public double getLimRetiradaDiaria() {
+			return 500000.0;
+		}
+
+		@Override
+		public int getStatus() {
+			return 2;
+		}
+
+		@Override
+		public void deposito(double valor) {
+			saldo += (valor * 1.025);
+		}
+
+		@Override
+		public void retirada() {
+			if (saldo < LIM_PLATINUM_GOLD) {
+				status = new Gold();
+			}
+		}
+		
 	}
 }
