@@ -51,9 +51,15 @@ public class Contas {
         return this.operacoes.gastoDiario(this.contaAtual.getNumero(), date);
     }
 
+    public double getSaldoMedio(int conta, int ano, int mes){
+        return this.operacoes.getSaldoMedio(conta, ano, mes, this.contaAtual.getSaldo());
+    }
+
     public double getSaldo(){
         return this.contaAtual.getSaldo();
     }
+
+
 
     public double getLimRetiradaDiaria(){
         return this.contaAtual.getLimRetiradaDiaria();

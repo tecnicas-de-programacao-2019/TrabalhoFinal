@@ -52,6 +52,10 @@ public class Fachada {
         return this.contas.gastoDiario();
     }
 
+    public double getSaldoMedio(int conta, int ano, int mes){
+        return this.contas.getSaldoMedio(conta,ano,mes);
+    }
+
     public boolean temSaldoParaDebito(double valor){
         return this.contas.getContaAtual().getSaldo() - valor >= 0 && valor >= 0;
     }

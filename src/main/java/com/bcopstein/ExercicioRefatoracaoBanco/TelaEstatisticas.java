@@ -1,5 +1,6 @@
 package com.bcopstein.ExercicioRefatoracaoBanco;
 
+import java.util.Calendar;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.GregorianCalendar;
@@ -76,22 +77,29 @@ public class TelaEstatisticas {
 	
 		ChoiceBox<String> choiceMes = new ChoiceBox<String>();
 		choiceMes.getItems().addAll("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
-		choiceMes.setValue("Junho");
+		
+		Calendar now = Calendar.getInstance();
+		choiceMes.getSelectionModel().select(now.get(Calendar.MONTH)+1);
+		// choiceMes.getSelectionModel().getSelectedIndex()+1
+
 
 		ChoiceBox<String> choiceAno = new ChoiceBox<String>();
 		choiceAno.getItems().addAll("2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010", "2009", "2008");
-		choiceAno.setValue("2019");
+		
+		int year = now.get(Calendar.YEAR);
+		String yearInString = String.valueOf(year);	
+		choiceAno.setValue(yearInString);
+
 		 
 		Button btnGet = new Button("Selecionar");
 		btnGet.setOnAction(e -> {
-			System.out.println("Mês:"+choiceMes.getValue() + " Ano:" + choiceAno.getValue() );
+			int mes = choiceMes.getSelectionModel().getSelectedIndex()+1;
+			int ano = Integer.parseInt(choiceAno.getValue());
+			int conta = fachada.getContaAtual().getNumero();
+			double saldoMedio = fachada.getSaldoMedio(conta, ano, mes);
+			smValue.setText(String.valueOf(saldoMedio));
 		});
 
-	// Pra fazer realmente com o mês atual. Só tem que mudar os mesês para ingles.
-	/*	LocalDate currentDate = LocalDate.now();
-		Month m = currentDate.getMonth();
-		System.out.println(m);
-	*/
 
 		HBox hbBtn = new HBox(30);
 		hbBtn.setAlignment(Pos.BOTTOM_LEFT);

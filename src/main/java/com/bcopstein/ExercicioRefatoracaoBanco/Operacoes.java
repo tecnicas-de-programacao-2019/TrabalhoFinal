@@ -1,6 +1,7 @@
 package com.bcopstein.ExercicioRefatoracaoBanco;
 
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,35 @@ public class Operacoes {
     public ObservableList<Operacao> getOperacoesConta(int nro){
         return FXCollections.observableArrayList(operacoes.stream()
 				.filter(op -> op.getNumeroConta() == nro).collect(Collectors.toList()));
+    }
+
+    public double getSaldoMedio(int conta, int ano, int mes, double saldoAtual){
+        LinkedList<Operacao> ops = new LinkedList<>();
+        double valorVariado=0;
+        int n=0;
+        int dia=0;
+
+        YearMonth yearMonthObject = YearMonth.of(ano, mes);
+        int daysInMonth = yearMonthObject.lengthOfMonth(); 
+
+        for (Operacao op : operacoes){
+            if (op.getNumeroConta()==conta && op.getAno()==ano && op.getMes()==mes){
+                ops.add(op);
+            }
+        }
+               
+        
+        
+        
+         // if(op.getTipoOperacao() == 0)
+                //     valorVariado += op.getValorOperacao();
+                // else
+                //     valorVariado -= op.getValorOperacao();
+                // n++;
+
+
+        double saldoMedio = saldo / n;
+        return saldoMedio;
     }
 
     public void add(Operacao op){
