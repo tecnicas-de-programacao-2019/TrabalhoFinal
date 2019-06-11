@@ -1,5 +1,6 @@
 package com.bcopstein.ExercicioRefatoracaoBanco;
-
+import java.time.Month;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,30 +29,38 @@ public class Operacoes {
 
     public double getSaldoMedio(int conta, int ano, int mes, double saldoAtual){
         LinkedList<Operacao> ops = new LinkedList<>();
-        double valorVariado=0;
-        int n=0;
-        int dia=0;
+        int dia=1;
+        double saldoMedio=0;
 
-        YearMonth yearMonthObject = YearMonth.of(ano, mes);
-        int daysInMonth = yearMonthObject.lengthOfMonth(); 
+        Calendar mycal = new GregorianCalendar(ano,mes-1,1);
+        int daysInMonth = mycal.getActualMaximum(mycal.DAY_OF_MONTH);
+
+
+        System.out.println(daysInMonth);
 
         for (Operacao op : operacoes){
             if (op.getNumeroConta()==conta && op.getAno()==ano && op.getMes()==mes){
                 ops.add(op);
             }
         }
+
+        while (dia <= daysInMonth){
+            for (Operacao op : ops){
+                if (op.getDia() == dia)
+                    saldoAtual+=op.getValorOperacao();
+                else
+                    saldoAtual+=saldoAtual;
+            }
+            dia++;
+        }
                
-        
+        saldoMedio = saldoAtual / daysInMonth;
         
         
          // if(op.getTipoOperacao() == 0)
                 //     valorVariado += op.getValorOperacao();
                 // else
                 //     valorVariado -= op.getValorOperacao();
-                // n++;
-
-
-        double saldoMedio = saldo / n;
         return saldoMedio;
     }
 
