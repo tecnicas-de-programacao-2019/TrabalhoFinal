@@ -34,10 +34,7 @@ public class Operacoes {
 
         Calendar mycal = new GregorianCalendar(ano,mes-1,1);
         int daysInMonth = mycal.getActualMaximum(mycal.DAY_OF_MONTH);
-
-
         
-
         for (Operacao op : operacoes){
             if (op.getNumeroConta()==conta && op.getAno()==ano && op.getMes()==mes){
                 ops.add(op);

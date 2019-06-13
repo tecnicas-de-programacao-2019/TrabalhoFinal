@@ -1,7 +1,10 @@
 package com.bcopstein.ExercicioRefatoracaoBanco;
+
+import java.util.Calendar;
+
 public class Operacao {
-	public final int CREDITO = 0;
-	public final int DEBITO = 1;
+	public static final int CREDITO = 0;
+	public static final int DEBITO = 1;
     
 	private int dia;
     private int mes;
@@ -14,7 +17,7 @@ public class Operacao {
     private double valorOperacao;
     private int tipoOperacao;
     
-	public Operacao(int dia, int mes, int ano, int hora, int minuto, int segundo, int numeroConta, int statusConta,
+	private Operacao(int dia, int mes, int ano, int hora, int minuto, int segundo, int numeroConta, int statusConta,
 			double valorOperacao, int tipoOperacao) {
 		super();
 		this.dia = dia;
@@ -27,6 +30,26 @@ public class Operacao {
 		this.statusConta = statusConta;
 		this.valorOperacao = valorOperacao;
 		this.tipoOperacao = tipoOperacao;
+	}
+
+	public static Operacao criaDeposito(int numeroConta, int statusConta, double valorOperacao){
+		Calendar date = Calendar.getInstance();
+        Operacao op = new Operacao(date.get(Calendar.DAY_OF_MONTH),
+        date.get(Calendar.MONTH + 1), date.get(Calendar.YEAR),
+        date.get(Calendar.HOUR), date.get(Calendar.MINUTE),
+		date.get(Calendar.SECOND), numeroConta, statusConta, valorOperacao, CREDITO);
+		
+		return op;
+	}
+
+	public static Operacao criaRetirada(int numeroConta, int statusConta, double valorOperacao){
+		Calendar date = Calendar.getInstance();
+        Operacao op = new Operacao(date.get(Calendar.DAY_OF_MONTH),
+        date.get(Calendar.MONTH + 1), date.get(Calendar.YEAR),
+        date.get(Calendar.HOUR), date.get(Calendar.MINUTE),
+		date.get(Calendar.SECOND), numeroConta, statusConta, valorOperacao, DEBITO);
+		
+		return op;
 	}
 
 	public int getDia() {

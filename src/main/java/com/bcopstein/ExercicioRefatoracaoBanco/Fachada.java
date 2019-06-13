@@ -1,5 +1,6 @@
 package com.bcopstein.ExercicioRefatoracaoBanco;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javafx.collections.ObservableList;
@@ -39,13 +40,16 @@ public class Fachada {
 
     public Operacao addOperacao(int numeroConta, int statusConta,
     double valorOperacao, int tipoOperacao){
-        GregorianCalendar date = new GregorianCalendar();
-        Operacao op = new Operacao(date.get(GregorianCalendar.DAY_OF_MONTH),
-        date.get(GregorianCalendar.MONTH + 1), date.get(GregorianCalendar.YEAR),
-        date.get(GregorianCalendar.HOUR), date.get(GregorianCalendar.MINUTE),
-        date.get(GregorianCalendar.SECOND), numeroConta, statusConta, valorOperacao, tipoOperacao);
-        this.contas.addOperacao(op);
-        return op;
+        if(tipoOperacao == Operacao.DEBITO){
+            Operacao op = Operacao.criaRetirada(numeroConta, statusConta, valorOperacao);
+            this.contas.addOperacao(op);
+            return op;
+        }else if (tipoOperacao == Operacao.CREDITO){
+            Operacao op = Operacao.criaDeposito(numeroConta, statusConta, valorOperacao);
+            this.contas.addOperacao(op);
+            return op;
+        } 
+        throw new IllegalArgumentException("Tipo de operação invalida");
     }
 
     public double gastoDiario(){
