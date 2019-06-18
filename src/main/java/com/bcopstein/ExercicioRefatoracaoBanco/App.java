@@ -13,7 +13,7 @@ public class App extends Application {
 	
     @Override
     public void start(Stage primaryStage) {
-        Operacoes operacoes = new Operacoes(Persistencia.getInstance());
+       
     	
     	primaryStage.setTitle("$$ Banco NOSSA GRANA $$");
 

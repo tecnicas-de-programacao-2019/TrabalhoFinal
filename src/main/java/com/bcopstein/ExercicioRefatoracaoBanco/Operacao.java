@@ -30,6 +30,7 @@ public class Operacao {
 		this.statusConta = statusConta;
 		this.valorOperacao = valorOperacao;
 		this.tipoOperacao = tipoOperacao;
+		// System.out.println("Conta: "+numeroConta+" Mês: "+mes);
 	}
 
 	public static Operacao criaDeposito(int numeroConta, int statusConta, double valorOperacao){

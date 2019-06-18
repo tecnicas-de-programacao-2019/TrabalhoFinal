@@ -52,7 +52,7 @@ public class Contas {
     }
 
     public double getSaldoMedio(int conta, int ano, int mes){
-        return this.operacoes.getSaldoMedio(conta, ano, mes, this.contaAtual.getSaldo());
+        return this.operacoes.getSaldoMedio(conta, ano, mes);
     }
 
     public double getSaldo(){

@@ -83,6 +83,7 @@ public class Persistencia {
     }
 
     public List<Operacao> loadOperacoes() {
+        System.out.println("Entrei");
         List<Operacao> operacoes = new LinkedList<Operacao>();
 
         String currDir = Paths.get("").toAbsolutePath().toString();
@@ -108,6 +109,9 @@ public class Persistencia {
                 valor = Double.parseDouble(sc.next());
                 tipo = Integer.parseInt(sc.next());
                 Operacao op = Operacao.criaOperacaoAntiga(dia, mes, ano, hora, minuto, segundo, numero, status, valor, tipo);
+                System.out.println("Conta: "+numero+" Mês: "+mes);
+                System.out.println(sc.hasNext());
+
                 operacoes.add(op);
                 
             }
