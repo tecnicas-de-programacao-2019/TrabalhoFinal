@@ -52,6 +52,11 @@ public class Operacao {
 		return op;
 	}
 
+	public static Operacao criaOperacaoAntiga(int dia, int mes, int ano, int hora, int minuto, int segundo, int numeroConta, int statusConta,
+	double valorOperacao, int tipoOperacao){
+		return new Operacao(dia, mes, ano, hora, minuto, segundo, numeroConta, statusConta, valorOperacao, tipoOperacao);
+	}
+
 	public int getDia() {
 		return dia;
 	}

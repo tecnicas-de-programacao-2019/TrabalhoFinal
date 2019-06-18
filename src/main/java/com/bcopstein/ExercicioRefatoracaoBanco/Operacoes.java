@@ -65,13 +65,13 @@ public class Operacoes {
         operacoes.add(op);
     }
 
-    public double gastoDiario(Integer nroConta, GregorianCalendar date){
+    public double gastoDiario(Integer nroConta, Calendar date){
         double totalDiario = 0;
         for(Operacao op : operacoes){
             if(op.getTipoOperacao() == op.DEBITO && op.getNumeroConta() == nroConta){
-                if(op.getDia() == date.get(GregorianCalendar.DAY_OF_MONTH) && 
-                op.getMes() == date.get(GregorianCalendar.MONTH + 1) && 
-                op.getAno() == date.get(GregorianCalendar.YEAR)){
+                if(op.getDia() == date.get(Calendar.DAY_OF_MONTH) && 
+                op.getMes() == date.get(Calendar.MONTH + 1) && 
+                op.getAno() == date.get(Calendar.YEAR)){
                     totalDiario += op.getValorOperacao();
                 }
             }

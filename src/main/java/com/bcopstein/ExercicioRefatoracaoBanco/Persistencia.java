@@ -107,17 +107,8 @@ public class Persistencia {
                 status = Integer.parseInt(sc.next());
                 valor = Double.parseDouble(sc.next());
                 tipo = Integer.parseInt(sc.next());
-
-                if (tipo == Operacao.DEBITO) {
-                    Operacao op = Operacao.criaRetirada(numero, status, valor);
-                    operacoes.add(op);
-                } else if (tipo == Operacao.CREDITO) {
-                    Operacao op = Operacao.criaDeposito(numero, status, valor);
-                    operacoes.add(op);
-                } else {
-                    throw new IllegalArgumentException("Tipo de operação invalida");
-                }
-
+                Operacao op = Operacao.criaOperacaoAntiga(dia, mes, ano, hora, minuto, segundo, numero, status, valor, tipo);
+                operacoes.add(op);
                 
             }
         } catch (IOException x) {
