@@ -60,8 +60,13 @@ public class Operacoes {
         double saldoAux2 = 0;
         while (dia <= daysInMonth){
             for (Operacao op : ops){
-                if (op.getDia() == dia)
-                    saldoAux2+=op.getValorOperacao();
+                if (op.getDia() == dia){
+                    if(op.getTipoOperacao() == Operacao.CREDITO)
+                        saldoAux2+=op.getValorOperacao();
+                    else
+                        saldoAux2-=op.getValorOperacao();
+                }
+                   
                 
             }
             saldoAux+=saldoAtual;
@@ -76,11 +81,6 @@ public class Operacoes {
         System.out.println("Days in month: "+daysInMonth);
         saldoMedio = saldoAux / daysInMonth;
         
-        
-         // if(op.getTipoOperacao() == 0)
-                //     valorVariado += op.getValorOperacao();
-                // else
-                //     valorVariado -= op.getValorOperacao();
         return saldoMedio;
     }
 
@@ -92,39 +92,7 @@ public class Operacoes {
 
 
 
-    public double getSaldoMedio1(int conta, int ano, int mes, double saldoAtual){
-        LinkedList<Operacao> ops = new LinkedList<>();
-        int dia=1;
-        double saldoMedio=0;
-
-        Calendar mycal = new GregorianCalendar(ano,mes-1,1);
-        int daysInMonth = mycal.getActualMaximum(mycal.DAY_OF_MONTH);
-        
-        for (Operacao op : operacoes){
-            if (op.getNumeroConta()==conta && op.getAno()==ano && op.getMes()==mes){
-                ops.add(op);
-            }
-        }
-
-        while (dia <= daysInMonth){
-            for (Operacao op : ops){
-                if (op.getDia() == dia)
-                    saldoAtual+=op.getValorOperacao();
-                else
-                    saldoAtual+=saldoAtual;
-            }
-            dia++;
-        }
-               
-        saldoMedio = saldoAtual / daysInMonth;
-        
-        
-         // if(op.getTipoOperacao() == 0)
-                //     valorVariado += op.getValorOperacao();
-                // else
-                //     valorVariado -= op.getValorOperacao();
-        return saldoMedio;
-    }
+   
 
     public void add(Operacao op){
         operacoes.add(op);
@@ -135,7 +103,7 @@ public class Operacoes {
         for(Operacao op : operacoes){
             if(op.getTipoOperacao() == op.DEBITO && op.getNumeroConta() == nroConta){
                 if(op.getDia() == date.get(Calendar.DAY_OF_MONTH) && 
-                op.getMes() == date.get(Calendar.MONTH + 1) && 
+                op.getMes() == date.get(Calendar.MONTH)+1 && 
                 op.getAno() == date.get(Calendar.YEAR)){
                     totalDiario += op.getValorOperacao();
                 }

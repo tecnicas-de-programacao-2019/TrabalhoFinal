@@ -1,5 +1,6 @@
 package com.bcopstein.ExercicioRefatoracaoBanco;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Map;
 
@@ -47,7 +48,7 @@ public class Contas {
     }
 
     public double gastoDiario(){
-        GregorianCalendar date = new GregorianCalendar();
+        Calendar date = Calendar.getInstance();
         return this.operacoes.gastoDiario(this.contaAtual.getNumero(), date);
     }
 

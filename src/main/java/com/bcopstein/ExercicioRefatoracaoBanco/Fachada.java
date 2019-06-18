@@ -65,7 +65,7 @@ public class Fachada {
     }
 
     public boolean estourouLimiteDebitoDiario(double valor){
-        return this.contas.getSaldo() + valor >= this.contas.getLimRetiradaDiaria() 
+        return this.contas.gastoDiario() + valor >= this.contas.getLimRetiradaDiaria() 
         && valor >= 0;
     }
     

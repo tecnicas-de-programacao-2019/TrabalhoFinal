@@ -36,7 +36,7 @@ public class Operacao {
 	public static Operacao criaDeposito(int numeroConta, int statusConta, double valorOperacao){
 		Calendar date = Calendar.getInstance();
         Operacao op = new Operacao(date.get(Calendar.DAY_OF_MONTH),
-        date.get(Calendar.MONTH + 1), date.get(Calendar.YEAR),
+        date.get(Calendar.MONTH)+1, date.get(Calendar.YEAR),
         date.get(Calendar.HOUR), date.get(Calendar.MINUTE),
 		date.get(Calendar.SECOND), numeroConta, statusConta, valorOperacao, CREDITO);
 		
@@ -46,7 +46,7 @@ public class Operacao {
 	public static Operacao criaRetirada(int numeroConta, int statusConta, double valorOperacao){
 		Calendar date = Calendar.getInstance();
         Operacao op = new Operacao(date.get(Calendar.DAY_OF_MONTH),
-        date.get(Calendar.MONTH + 1), date.get(Calendar.YEAR),
+        date.get(Calendar.MONTH)+ 1, date.get(Calendar.YEAR),
         date.get(Calendar.HOUR), date.get(Calendar.MINUTE),
 		date.get(Calendar.SECOND), numeroConta, statusConta, valorOperacao, DEBITO);
 		

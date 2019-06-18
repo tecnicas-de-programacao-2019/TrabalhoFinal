@@ -47,10 +47,10 @@ public class OperacoesTest{
     @Test
     @DisplayName("Testa se o gasto diario de uma conta esta sendo calculado")
     public void testaGastoDiario() {
-        Calendar date = new GregorianCalendar();
+        Calendar date = Calendar.getInstance();
 
         ops.add(Operacao.criaOperacaoAntiga(date.get(Calendar.DAY_OF_MONTH),
-        date.get(Calendar.MONTH + 1),
+        date.get(Calendar.MONTH)+1,
         date.get(Calendar.YEAR),
         15, 15, 56, 1, 0, 1000, 1));
 
