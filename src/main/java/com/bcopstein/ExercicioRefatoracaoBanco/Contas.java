@@ -55,6 +55,12 @@ public class Contas {
     public double getSaldoMedio(int conta, int ano, int mes){
         return this.operacoes.getSaldoMedio(conta, ano, mes);
     }
+    public double getTotalDebito(int conta, int ano, int mes ){
+        return this.operacoes.getTotalDebito(conta,ano,mes);
+    }
+    public double getTotalCredito(int conta, int ano, int mes ){
+        return this.operacoes.getTotalCredito(conta,ano,mes);
+    }
 
     public double getSaldo(){
         return this.contaAtual.getSaldo();

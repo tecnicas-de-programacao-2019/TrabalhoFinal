@@ -60,17 +60,17 @@ public class TelaEstatisticas {
 															
 		Label sm = new Label( "Saldo médio: ");
 		grid.add(sm, 0, 1);
-		Label smValue = new Label("Teste");
+		Label smValue = new Label("");
 		grid.add(smValue, 2, 1);
 
 		Label tc = new Label("Total de crédito: " );
 		grid.add(tc, 0, 2);
-		Label tcValue = new Label("Teste");
+		Label tcValue = new Label("");
 		grid.add(tcValue, 2, 2);
 
 		Label td = new Label("Total de débito: ");
 		grid.add(td, 0, 3);
-		Label tdValue = new Label("Teste");
+		Label tdValue = new Label("");
 		grid.add(tdValue, 2, 3);
 
 
@@ -95,8 +95,15 @@ public class TelaEstatisticas {
 			int mes = choiceMes.getSelectionModel().getSelectedIndex()+1;
 			int ano = Integer.parseInt(choiceAno.getValue());
 			int conta = fachada.getContaAtual().getNumero();
+
 			double saldoMedio = fachada.getSaldoMedio(conta, ano, mes);
 			smValue.setText(String.valueOf(saldoMedio));
+
+			double totalDebito = fachada.getTotalDebito(conta, ano, mes);
+			tdValue.setText(String.valueOf(totalDebito));
+
+			double totalCredito = fachada.getTotalCredito(conta, ano, mes);
+			tcValue.setText(String.valueOf(totalCredito));
 		});
 
 

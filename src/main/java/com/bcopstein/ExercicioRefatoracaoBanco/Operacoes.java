@@ -29,7 +29,7 @@ public class Operacoes {
 
 
     public double getSaldoMedio(int conta, int ano, int mes ){
-        System.out.println("Conta = "+conta+" Ano = "+ ano+ " Mês = "+mes);
+        //System.out.println("Conta = "+conta+" Ano = "+ ano+ " Mês = "+mes);
        
         LinkedList<Operacao> ops = new LinkedList<>();
         double saldoAtual=0;
@@ -40,12 +40,26 @@ public class Operacoes {
         int daysInMonth = mycal.getActualMaximum(mycal.DAY_OF_MONTH);
 
         for (Operacao op : operacoes){
-            if (op.getAno()>=ano && op.getMes()>=mes)
-                break;
-            else if(op.getNumeroConta()==conta)
+            if (op.getAno()>=ano){
+                if(op.getAno()==ano && op.getMes()>=mes)
+                    break;
+                if (op.getAno()==ano && op.getMes()<mes && op.getNumeroConta()==conta)
+                    saldoAtual+=op.getValorOperacao();
+
+                if(op.getAno()>ano)
+                    break;
+                
+            } 
+           
+            
+            else if(op.getNumeroConta()==conta){
                 saldoAtual+=op.getValorOperacao();
+                //System.out.println("Adicionei a operacao do ano "+op.getAno() + " "+op.getMes());
+              //  System.out.println(op.getAno()>=ano);
+               // System.out.println(op.getMes()>=ano);
+            }
         }
-        System.out.println("Saldo atual: "+saldoAtual);
+        //System.out.println("Saldo atual: "+saldoAtual);
 
         for (Operacao op1 : operacoes){
            
@@ -53,7 +67,7 @@ public class Operacoes {
             
             if (op1.getNumeroConta()==conta && op1.getAno()==ano && op1.getMes()==mes){
                 ops.add(op1);
-                System.out.println("Valor da operação: "+ op1.getValorOperacao());
+             //   System.out.println("Valor da operação: "+ op1.getValorOperacao());
             }
         }
         double saldoAux = 0;
@@ -73,21 +87,57 @@ public class Operacoes {
             dia++;
         }
 
-        System.out.println("Saldo aux: "+saldoAux);
-        System.out.println("Saldo aux2: "+saldoAux2);
+       // System.out.println("Saldo aux: "+saldoAux);
+        //System.out.println("Saldo aux2: "+saldoAux2);
 
         saldoAux+=saldoAux2;
-        System.out.println("Saldo atual2: "+saldoAux);
-        System.out.println("Days in month: "+daysInMonth);
+        //System.out.println("Saldo atual2: "+saldoAux);
+        //System.out.println("Days in month: "+daysInMonth);
         saldoMedio = saldoAux / daysInMonth;
         
         return saldoMedio;
     }
 
 
+    public double getTotalDebito(int conta, int ano, int mes ){
+        //System.out.println("Conta = "+conta+" Ano = "+ ano+ " Mês = "+mes);
+       
+        LinkedList<Operacao> ops = new LinkedList<>();
+        double debito=0;
+        int dia=1;
+        
 
+        Calendar mycal = new GregorianCalendar(ano,mes-1,1);
+        int daysInMonth = mycal.getActualMaximum(mycal.DAY_OF_MONTH);
 
+        for (Operacao op : operacoes){
+            if (op.getNumeroConta() == conta && op.getAno()==ano && op.getMes()==mes && op.getTipoOperacao()==Operacao.DEBITO){
+                debito+=op.getValorOperacao();
+                
+            } 
+        }
+        return debito;
+    }
 
+    public double getTotalCredito(int conta, int ano, int mes ){
+        //System.out.println("Conta = "+conta+" Ano = "+ ano+ " Mês = "+mes);
+       
+        LinkedList<Operacao> ops = new LinkedList<>();
+        double credito=0;
+        int dia=1;
+        
+
+        Calendar mycal = new GregorianCalendar(ano,mes-1,1);
+        int daysInMonth = mycal.getActualMaximum(mycal.DAY_OF_MONTH);
+
+        for (Operacao op : operacoes){
+            if (op.getNumeroConta() == conta && op.getAno()==ano && op.getMes()==mes && op.getTipoOperacao()==Operacao.CREDITO){
+                credito+=op.getValorOperacao();
+                
+            } 
+        }
+        return credito;
+    }
 
 
 
